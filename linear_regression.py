@@ -10,25 +10,22 @@ class LinearRegression(SupervisedLearning):
     """
     def __init__(self, feature_vector, target_vector):
         super().__init__(feature_vector, target_vector)
-        self.x = feature_vector
-        #self.x['bias'] = [1]*len(self.x)
-        self.y = target_vector
+        self.x = feature_vector.values
+        self.y = target_vector.values
         self.loss = 'Mean Squared Error'
-
-    def add_bias(self):
-        self.x['bias'] = [1]*len(self.x)
-        return self.x
 
     # Ordinary least squares
     def find_weights(self):
-        x = self.add_bias()
+        x = self.add_bias(self.x)
         y = self.y
         x_t = np.transpose(x)
         x_x_t = x_t @ x
         inv_x_x_t = inv(x_x_t)
-        weights = (inv_x_x_t @ x_t) @ y
+        weights = ((inv_x_x_t @ x_t) @ y)
 
         return weights
 
+    def predict(self):
+        return self.add_bias(self.x)@self.find_weights()
 
 
