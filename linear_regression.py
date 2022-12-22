@@ -27,12 +27,27 @@ class LinearRegression(SupervisedLearning):
 
     def gradient_descent(self, a=0.0005, iter_cnt = 100):
         w = self.random_weights
+        x = self.add_bias(self.x)
         while iter_cnt != 0:
-            y_pred = self.add_bias(self.x) @ w
+            y_pred = x @ w
             loss = y_pred-self.y
-            gradient = (2/self.n)*(self.add_bias(self.x).T@loss)
+            gradient = (2/self.n)*(x.T@loss)
             iter_cnt-=1
             w -= a*gradient
+        return w
+
+    def stochastic_gradient_descent(self, a=0.0005, batch_size=2):
+        x = self.add_bias(self.x)
+        w = self.random_weights
+        batch_sum = batch_size
+        while batch_sum <= self.n:
+            x_batch = x[batch_sum - batch_size: batch_sum]
+            y_batch = self.y[batch_sum - batch_size: batch_sum]
+            y_pred = x_batch @ w
+            loss = y_pred - y_batch
+            gradient = (2 / self.n) * (x_batch.T @ loss)
+            batch_sum += batch_size
+            w -= a * gradient
         return w
 
 
