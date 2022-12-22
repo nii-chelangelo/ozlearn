@@ -25,11 +25,21 @@ class LinearRegression(SupervisedLearning):
 
         return weights
 
-    def gradient_descent(self):
+    def gradient_descent(self, a=0.0005, iter_cnt = 100):
+        w = self.random_weights
+        while iter_cnt != 0:
+            y_pred = self.add_bias(self.x) @ w
+            loss = y_pred-self.y
+            gradient = (2/self.n)*(self.add_bias(self.x).T@loss)
+            iter_cnt-=1
+            w -= a*gradient
+        return w
+
+
         pass
 
-    def predict(self):
-        return self.add_bias(self.x)@self.find_weights()
+    def predict(self, w):
+        return self.add_bias(self.x)@w
 
     #def calc_RSS(self):
     #    RSS = matrix_power((self.y-self.predict()), 2)
