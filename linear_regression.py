@@ -1,5 +1,5 @@
 import numpy as np
-from numpy.linalg import inv
+from numpy.linalg import inv, matrix_power
 
 from supervised_learning import SupervisedLearning
 class LinearRegression(SupervisedLearning):
@@ -25,7 +25,14 @@ class LinearRegression(SupervisedLearning):
 
         return weights
 
+    def gradient_descent(self):
+        pass
+
     def predict(self):
         return self.add_bias(self.x)@self.find_weights()
+
+    #def calc_RSS(self):
+    #    RSS = matrix_power((self.y-self.predict()), 2)
+    #    return RSS
 
 

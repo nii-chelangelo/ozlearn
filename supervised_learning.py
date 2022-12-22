@@ -21,4 +21,10 @@ class SupervisedLearning():
     def train_test_split(self):
         pass
 
+    def mse(self, y_pred):
+        n = self.x.shape[0]
+        se = ((self.y-y_pred)**2).sum()
+        mse = se/n
+        return mse
+
 
