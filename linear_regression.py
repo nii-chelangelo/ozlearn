@@ -12,7 +12,7 @@ class LinearRegression(SupervisedLearning):
         super().__init__(feature_vector, target_vector)
         self.x = feature_vector.values
         self.y = target_vector.values
-        self.loss = 'Mean Squared Error'
+        self.random_weights = np.random.default_rng(37).normal(0.5, 0.1, (self.m+1, 1)) # плюс 1 для bais
 
     # Ordinary least squares
     def ols(self):
@@ -50,7 +50,7 @@ class LinearRegression(SupervisedLearning):
             w -= a * gradient
         return w
 
-    def lasso_regression(self):
+    def lasso_regression(self, a=0.0005, batch_size=2, l=1e-2):
         pass
 
     def ridge_regression(self, a=0.0005, batch_size=2, l=1e-2):

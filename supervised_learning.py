@@ -10,7 +10,6 @@ class SupervisedLearning():
         self.y = target_vector
         self.n = self.x.shape[0]
         self.m = self.x.shape[1]
-        self.random_weights = np.random.default_rng(37).normal(0.5, 0.1, (self.m+1, 1)) # плюс 1 для bais
         self.ones_array = np.ones((self.n, 1))
 
     def add_bias(self, x):
@@ -21,9 +20,17 @@ class SupervisedLearning():
         pass
 
     def mse(self, y_pred):
-        n = self.x.shape[0]
+        n = self.n
         se = ((self.y-y_pred)**2).sum()
         mse = se/n
         return mse
+
+    def mae(self, y_pred):
+        mae = (np.abs(self.y-y_pred).sum())/self.n
+        return mae
+
+    def mape(self, y_pred):
+        mape = (np.abs((y_pred-self.y)/self.y).sum())/self.n
+        return mape
 
 
