@@ -10,7 +10,7 @@ class SupervisedLearning():
         self.y = target_vector
         self.n = self.x.shape[0]
         self.m = self.x.shape[1]
-        self.random_weights = np.random.default_rng().normal(0.5, 0.1, (self.m+1, 1)) # плюс 1 для bais
+        self.random_weights = np.random.default_rng(37).normal(0.5, 0.1, (self.m+1, 1)) # плюс 1 для bais
         self.ones_array = np.ones((self.n, 1))
 
     def add_bias(self, x):

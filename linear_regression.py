@@ -15,7 +15,7 @@ class LinearRegression(SupervisedLearning):
         self.loss = 'Mean Squared Error'
 
     # Ordinary least squares
-    def find_weights(self):
+    def ols(self):
         x = self.add_bias(self.x)
         y = self.y
         x_t = np.transpose(x)
@@ -50,8 +50,22 @@ class LinearRegression(SupervisedLearning):
             w -= a * gradient
         return w
 
-
+    def lasso_regression(self):
         pass
+
+    def ridge_regression(self, a=0.0005, batch_size=2, l=1e-2):
+        x = self.add_bias(self.x)
+        w = self.random_weights
+        batch_sum = batch_size
+        while batch_sum <= self.n:
+            x_batch = x[batch_sum - batch_size: batch_sum]
+            y_batch = self.y[batch_sum - batch_size: batch_sum]
+            y_pred = (x_batch @ w) + l*(w**2)
+            loss = y_pred - y_batch
+            gradient = (2) * (x_batch.T @ loss) + 2*l*w
+            batch_sum += batch_size
+            w -= a * gradient
+        return w
 
     def predict(self, w):
         return self.add_bias(self.x)@w
